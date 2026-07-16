@@ -1,4 +1,14 @@
 {
-  "firebase_url": "https://PROYEK-ANDA-default-rtdb.asia-southeast1.firebasedatabase.app",
-  "keterangan": "Salin file ini menjadi config.json lalu ganti firebase_url dengan URL Realtime Database Anda (tanpa / di akhir)."
+  "firebase_url": "https://nailul-muna-cyber-guard-default-rtdb.asia-southeast1.firebasedatabase.app",
+  "firebase_web": {
+    "apiKey": "GANTI_DENGAN_API_KEY_ANDA",
+    "authDomain": "nailul-muna-cyber-guard.firebaseapp.com",
+    "databaseURL": "https://nailul-muna-cyber-guard-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "projectId": "nailul-muna-cyber-guard",
+    "storageBucket": "nailul-muna-cyber-guard.firebasestorage.app",
+    "messagingSenderId": "352031344777",
+    "appId": "1:352031344777:web:XXXXXXXX",
+    "measurementId": "G-XXXXXXXX"
+  },
+  "keterangan": "Salin ke config.json. WAJIB buat Realtime Database di Firebase Console dulu, lalu pastikan firebase_url sama dengan URL di tab Data."
 }

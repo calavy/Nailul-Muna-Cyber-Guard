@@ -1,21 +1,35 @@
 ============================================================
 NME Guardian — Cara Gabung ke Firebase Cloud
-Pesantren API Nailul Muna
+Proyek: nailul-muna-cyber-guard
 ============================================================
 
-A. BUAT DATABASE DI FIREBASE CONSOLE
-------------------------------------
-1. Buka https://console.firebase.google.com/
-2. Add project (contoh nama: nme-guardian)
-3. Build → Realtime Database → Create Database
-   - Pilih region (contoh: asia-southeast1)
-4. Salin Database URL, contoh:
-   https://nme-guardian-default-rtdb.asia-southeast1.firebasedatabase.app
-   (TANPA garis miring di akhir, TANPA .json)
+STATUS PROYEK ANDA
+------------------
+- projectId : nailul-muna-cyber-guard
+- Web App ID: 1:352031344777:web:1c19941260add433ed9e58
+- Config web sudah disimpan di config.json (firebase_web)
 
-B. RULES (UJI AWAL SAJA)
-------------------------
-Di tab Rules, Publish:
+PENTING: App ID / apiKey SAJA TIDAK CUKUP.
+NME Guardian butuh Realtime Database (bukan hanya Firestore).
+
+A. BUAT REALTIME DATABASE (WAJIB — jika belum)
+---------------------------------------------
+1. Buka https://console.firebase.google.com/
+2. Pilih proyek: nailul-muna-cyber-guard
+3. Menu kiri: Build → Realtime Database
+4. Klik Create Database
+5. Region disarankan: asia-southeast1 (Singapore)
+6. Mulai dalam mode test (baca/tulis terbuka untuk uji)
+7. Salin URL di atas halaman Data, contoh:
+   https://nailul-muna-cyber-guard-default-rtdb.asia-southeast1.firebasedatabase.app
+8. Tempel URL itu ke config.json → firebase_url
+   (dan android/app/src/main/assets/config.json)
+
+Jika Create Database belum dilakukan, uji akan gagal HTTP 404.
+
+B. RULES (UJI AWAL)
+-------------------
+Tab Rules → Publish:
 
 {
   "rules": {
@@ -24,53 +38,40 @@ Di tab Rules, Publish:
   }
 }
 
-Peringatan: rules terbuka hanya untuk belajar/uji.
-Kunci dengan Authentication sebelum dipakai produksi.
+File referensi: database.rules.json
 
-Isi yang sama ada di file: database.rules.json
+C. NODE AWAL
+------------
+Boleh kosong; atau buat:
+  status_blokir    = false
+  link_diblokir    = {}
+  izin_instal      = {}
+  aktivitas_online = {}
+  perangkat        = {}
 
-C. NODE AWAL DI TAB DATA
-------------------------
-Buat node berikut (klik +):
+D. CONFIG DI KOMPUTER INI
+-------------------------
+File: config.json  (tidak di-push ke GitHub)
 
-  status_blokir     = false          (tipe boolean)
-  link_diblokir     = {}             (object)
-  izin_instal       = {}             (object)
-  aktivitas_online  = {}             (object)
-  perangkat         = {}             (object)
-  aplikasi_dibuka   = null           (boleh kosong; diisi otomatis)
+{
+  "firebase_url": "https://...URL-DARI-CONSOLE...",
+  "firebase_web": { ... config dari Console ... }
+}
 
-Contoh link_diblokir (opsional):
-  tiktok.com → { "alasan": "Hiburan berlebih", "aktif": true }
-  Instagram.com → { "alasan": "Media sosial", "aktif": true }
-
-D. ISI CONFIG DI PROYEK INI
----------------------------
-1. Salin config.contoh.json menjadi config.json
-   (atau edit config.json yang sudah ada)
-2. Isi:
-   {
-     "firebase_url": "https://URL-DATABASE-ANDA.firebasedatabase.app"
-   }
-3. Samakan juga:
-   - android/app/src/main/assets/config.json
-4. Setelah pakai URL cloud (https), TIDAK perlu menjalankan
-   firebase_lokal.py lagi.
+Setelah firebase_url memakai https cloud, TIDAK perlu
+menjalankan firebase_lokal.py.
 
 E. UJI
 ------
-1. python uji_firebase.py
-   → harus tampil OK untuk GET/PUT
-2. python pantau.py → Mulai Pantau
-3. Cek Console Firebase: node aktivitas_online/windows terisi
-4. Panel admin:
-   http://localhost/Nailul%20Muna%20Cyber%20Guard/admin/
-   (URL ikut config.json)
+  python uji_firebase.py
 
-F. GITHUB
----------
-Repo lokal sudah disiapkan dengan .gitignore (config.json
-tidak ikut ter-commit). Push ke GitHub HANYA jika Anda minta
-secara eksplisit dan memberi URL repo (disarankan Private).
+Harus tampil: SEMUA UJI BERHASIL
+Lalu: python pantau.py → Mulai Pantau
+Panel: http://localhost/Nailul%20Muna%20Cyber%20Guard/admin/
+
+F. KEAMANAN
+-----------
+Repo GitHub saat ini Public. Jangan commit config.json.
+Kunci Rules setelah uji / jadikan repo Private.
 
 ============================================================
