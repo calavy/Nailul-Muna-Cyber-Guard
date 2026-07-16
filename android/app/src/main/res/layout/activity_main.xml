@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="#EEF4F1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NME Guardian"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#0B5C4C" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Pesantren API Nailul Muna"
+        android:textColor="#5A7268" />
+
+    <TextView
+        android:id="@+id/txtStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="#1A2E28" />
+
+    <Button
+        android:id="@+id/btnUsage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="1. Izinkan Usage Access" />
+
+    <Button
+        android:id="@+id/btnMulai"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="2. Mulai Pantau Online" />
+
+    <Button
+        android:id="@+id/btnIzinApk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="3. Ajukan Izin Install APK (contoh)" />
+
+    <TextView
+        android:id="@+id/txtAktivitas"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp"
+        android:text="Belum memantau."
+        android:textColor="#1A2E28" />
+</LinearLayout>

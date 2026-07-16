@@ -1,0 +1,4 @@
+{
+  "firebase_url": "https://PROYEK-ANDA-default-rtdb.asia-southeast1.firebasedatabase.app",
+  "keterangan": "Salin file ini menjadi config.json lalu ganti firebase_url dengan URL Realtime Database Anda (tanpa / di akhir)."
+}

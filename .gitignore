@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Konfigurasi lokal (boleh berisi URL proyek Anda)
+config.json
+android/app/src/main/assets/config.json
+
+# Karantina file instalasi santri
+karantina_instal/
+
+# IDE / OS
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Android build
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/*.apk
+android/*.aab
+*.keystore
+
+# Log & sementara
+*.log
+*.tmp
+*.db

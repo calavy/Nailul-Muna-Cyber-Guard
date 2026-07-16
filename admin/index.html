@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NME Guardian — Panel Pengasuh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --merk: #0b5c4c;
+      --aksen: #1f8a70;
+      --latar: #eef4f1;
+      --kartu: #f7fbf9;
+      --teks: #1a2e28;
+      --redup: #5a7268;
+      --waspada: #c45c26;
+      --aman: #2e7d5b;
+      --garis: #d0e3da;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Source Sans 3", sans-serif;
+      color: var(--teks);
+      background:
+        radial-gradient(1200px 500px at 10% -10%, #c8e6d8 0%, transparent 55%),
+        radial-gradient(900px 400px at 100% 0%, #dceee6 0%, transparent 50%),
+        var(--latar);
+      min-height: 100vh;
+    }
+    .hero {
+      background: linear-gradient(160deg, #0b5c4c 0%, #147a64 55%, #0e6b58 100%);
+      color: #e8f7f1;
+      padding: 2.4rem 1.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -4rem; top: -3rem;
+      width: 18rem; height: 18rem;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+    }
+    .hero h1 {
+      font-family: Fraunces, Georgia, serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      margin: 0 0 0.35rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hero p {
+      margin: 0;
+      opacity: 0.9;
+      max-width: 36rem;
+      position: relative;
+      z-index: 1;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 1.25rem 1.25rem 3rem; }
+    .toolbar {
+      display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: end;
+      margin: -1.5rem 0 1.25rem; position: relative; z-index: 2;
+    }
+    .field {
+      background: var(--kartu);
+      border: 1px solid var(--garis);
+      padding: 0.75rem 1rem;
+      flex: 1 1 280px;
+    }
+    .field label { display: block; font-size: 0.8rem; color: var(--redup); margin-bottom: 0.25rem; }
+    .field input {
+      width: 100%; border: none; background: transparent;
+      font: inherit; color: var(--teks); outline: none;
+    }
+    button, .btn {
+      border: none; cursor: pointer; font: inherit; font-weight: 700;
+      padding: 0.85rem 1.2rem; background: var(--aksen); color: #fff;
+    }
+    button.secondary { background: var(--merk); }
+    button.danger { background: var(--waspada); }
+    button.ghost { background: #dff0e8; color: var(--merk); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+    @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+    .stat {
+      background: var(--kartu);
+      border: 1px solid var(--garis);
+      padding: 1rem 1.1rem;
+    }
+    .stat span { display: block; color: var(--redup); font-size: 0.85rem; }
+    .stat strong {
+      font-family: Fraunces, Georgia, serif;
+      font-size: 1.6rem; color: var(--merk);
+    }
+    .panel {
+      background: var(--kartu);
+      border: 1px solid var(--garis);
+      margin-bottom: 1.1rem;
+      padding: 1.1rem 1.2rem 1.25rem;
+    }
+    .panel h2 {
+      font-family: Fraunces, Georgia, serif;
+      font-size: 1.25rem; margin: 0 0 0.25rem; color: var(--merk);
+    }
+    .panel .sub { color: var(--redup); margin: 0 0 0.9rem; font-size: 0.92rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+    th, td { text-align: left; padding: 0.55rem 0.4rem; border-bottom: 1px solid var(--garis); vertical-align: top; }
+    th { color: var(--redup); font-weight: 600; font-size: 0.8rem; }
+    .tag {
+      display: inline-block; padding: 0.15rem 0.45rem; font-size: 0.75rem; font-weight: 700;
+    }
+    .tag.pending { background: #fde8d8; color: var(--waspada); }
+    .tag.disetujui, .tag.selesai { background: #d9efe4; color: var(--aman); }
+    .tag.ditolak { background: #f5d6d6; color: #a33; }
+    .row-actions { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .row-actions button { padding: 0.4rem 0.7rem; font-size: 0.8rem; }
+    .muted { color: var(--redup); }
+    .url { word-break: break-all; font-family: Consolas, monospace; font-size: 0.82rem; }
+    .form-inline { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .form-inline input {
+      flex: 1 1 160px; border: 1px solid var(--garis); padding: 0.55rem 0.7rem; font: inherit;
+      background: #fff;
+    }
+    .switch-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap" style="padding-bottom:0; padding-top:0;">
+      <h1>NME Guardian</h1>
+      <p>Panel pengasuh Pesantren API Nailul Muna — pantau aktivitas online, blokir link, dan setujui instal APK/aplikasi.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="toolbar">
+      <div class="field">
+        <label for="firebaseUrl">URL Firebase (Realtime Database)</label>
+        <input id="firebaseUrl" value="http://127.0.0.1:8765" />
+        <small class="muted" id="configHint">Memuat config.json…</small>
+      </div>
+      <button type="button" id="btnRefresh">Muat Ulang</button>
+      <button type="button" class="secondary" id="btnToggleBlokir">Toggle Blokir Aplikasi</button>
+    </div>
+
+    <div class="grid">
+      <div class="stat"><span>Mode blokir aplikasi</span><strong id="statBlokir">—</strong></div>
+      <div class="stat"><span>Izin menunggu</span><strong id="statIzin">0</strong></div>
+      <div class="stat"><span>Link diblokir aktif</span><strong id="statLink">0</strong></div>
+    </div>
+
+    <section class="panel">
+      <div class="switch-row">
+        <div>
+          <h2>Aktivitas Online (Windows)</h2>
+          <p class="sub">Website, unduhan, dan event izin dari komputer santri</p>
+        </div>
+        <span class="muted" id="updateWindows">Belum ada data</span>
+      </div>
+      <h3 style="margin:0.5rem 0 0.4rem;font-size:1rem;">Website terakhir</h3>
+      <div id="tabelWeb" class="muted">Memuat…</div>
+      <h3 style="margin:1rem 0 0.4rem;font-size:1rem;">Unduhan terakhir</h3>
+      <div id="tabelUnduh" class="muted">Memuat…</div>
+    </section>
+
+    <section class="panel">
+      <h2>Aktivitas Online (Android)</h2>
+      <p class="sub">Data dari aplikasi NME Guardian di HP santri</p>
+      <div id="dataAndroid" class="muted">Belum ada perangkat Android online.</div>
+    </section>
+
+    <section class="panel">
+      <h2>Izin Instal APK / Aplikasi</h2>
+      <p class="sub">File berbahaya dikarantina sampai pengasuh menyetujui atau menolak</p>
+      <div id="tabelIzin" class="muted">Memuat…</div>
+    </section>
+
+    <section class="panel">
+      <h2>Blokir Link</h2>
+      <p class="sub">Domain yang ditambahkan akan dikirim ke Windows (hosts) dan Android</p>
+      <div class="form-inline">
+        <input id="domainBaru" placeholder="contoh: tiktok.com" />
+        <input id="alasanBaru" placeholder="Alasan (opsional)" />
+        <button type="button" id="btnTambahLink">Tambah Domain</button>
+      </div>
+      <div id="tabelLink" class="muted">Memuat…</div>
+    </section>
+
+    <section class="panel">
+      <h2>Perangkat Terhubung</h2>
+      <p class="sub">Windows & Android yang pernah mengirim data</p>
+      <div id="tabelPerangkat" class="muted">Memuat…</div>
+    </section>
+  </main>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const base = () => $("firebaseUrl").value.replace(/\/$/, "");
+
+    async function api(path, method = "GET", body) {
+      const opts = { method, headers: { "Content-Type": "application/json" } };
+      if (body !== undefined) opts.body = JSON.stringify(body);
+      const res = await fetch(`${base()}/${path}.json`, opts);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    }
+
+    function esc(s) {
+      return String(s ?? "").replace(/[&<>"']/g, (c) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[c]));
+    }
+
+    function renderWeb(list) {
+      if (!list || !list.length) {
+        $("tabelWeb").innerHTML = "<p class='muted'>Belum ada riwayat website.</p>";
+        return;
+      }
+      $("tabelWeb").innerHTML = `<table>
+        <thead><tr><th>Waktu</th><th>Browser</th><th>Judul / URL</th></tr></thead>
+        <tbody>${list.map(i => `<tr>
+          <td>${esc(i.waktu)}</td>
+          <td>${esc(i.browser)}</td>
+          <td><div>${esc(i.judul || "-")}</div><div class="url">${esc(i.url)}</div></td>
+        </tr>`).join("")}</tbody></table>`;
+    }
+
+    function renderUnduh(list) {
+      if (!list || !list.length) {
+        $("tabelUnduh").innerHTML = "<p class='muted'>Belum ada unduhan.</p>";
+        return;
+      }
+      $("tabelUnduh").innerHTML = `<table>
+        <thead><tr><th>Waktu</th><th>File</th><th>Izin?</th><th>Sumber</th></tr></thead>
+        <tbody>${list.map(i => `<tr>
+          <td>${esc(i.waktu)}</td>
+          <td>${esc(i.nama_file)}</td>
+          <td>${i.perlu_izin ? "<span class='tag pending'>WAJIB IZIN</span>" : "—"}</td>
+          <td class="url">${esc(i.url_sumber || i.jalur || "")}</td>
+        </tr>`).join("")}</tbody></table>`;
+    }
+
+    function renderIzin(obj) {
+      const entries = Object.entries(obj || {}).sort((a, b) =>
+        String(b[1]?.waktu_ajuan || "").localeCompare(String(a[1]?.waktu_ajuan || ""))
+      );
+      $("statIzin").textContent = entries.filter(([, v]) => v?.status === "pending").length;
+      if (!entries.length) {
+        $("tabelIzin").innerHTML = "<p class='muted'>Tidak ada permintaan izin.</p>";
+        return;
+      }
+      $("tabelIzin").innerHTML = `<table>
+        <thead><tr><th>Waktu</th><th>File</th><th>Perangkat</th><th>Status</th><th>Aksi</th></tr></thead>
+        <tbody>${entries.map(([id, i]) => `<tr>
+          <td>${esc(i.waktu_ajuan)}</td>
+          <td>${esc(i.nama_file)}<div class="muted">${esc(i.ekstensi)} · ${esc(i.platform)}</div></td>
+          <td>${esc(i.perangkat)}</td>
+          <td><span class="tag ${esc(i.status)}">${esc(i.status)}</span></td>
+          <td class="row-actions">
+            ${i.status === "pending" ? `
+              <button data-id="${esc(id)}" data-aksi="disetujui">Setujui</button>
+              <button class="danger" data-id="${esc(id)}" data-aksi="ditolak">Tolak</button>
+            ` : "—"}
+          </td>
+        </tr>`).join("")}</tbody></table>`;
+
+      $("tabelIzin").querySelectorAll("button[data-id]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const id = btn.getAttribute("data-id");
+          const status = btn.getAttribute("data-aksi");
+          await api(`izin_instal/${id}`, "PATCH", {
+            status,
+            waktu_keputusan: new Date().toISOString().slice(0, 19).replace("T", " "),
+          });
+          await muatSemua();
+        });
+      });
+    }
+
+    function renderLink(obj) {
+      const entries = Object.entries(obj || {});
+      $("statLink").textContent = entries.filter(([, v]) => v?.aktif !== false).length;
+      if (!entries.length) {
+        $("tabelLink").innerHTML = "<p class='muted'>Belum ada domain diblokir.</p>";
+        return;
+      }
+      $("tabelLink").innerHTML = `<table>
+        <thead><tr><th>Domain</th><th>Alasan</th><th>Aktif</th><th>Aksi</th></tr></thead>
+        <tbody>${entries.map(([domain, i]) => `<tr>
+          <td class="url">${esc(domain)}</td>
+          <td>${esc(i.alasan || "-")}</td>
+          <td>${i.aktif === false ? "Tidak" : "Ya"}</td>
+          <td class="row-actions">
+            <button class="ghost" data-domain="${esc(domain)}" data-toggle="1">
+              ${i.aktif === false ? "Aktifkan" : "Nonaktifkan"}
+            </button>
+            <button class="danger" data-domain="${esc(domain)}" data-hapus="1">Hapus</button>
+          </td>
+        </tr>`).join("")}</tbody></table>`;
+
+      $("tabelLink").querySelectorAll("button[data-domain]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const domain = btn.getAttribute("data-domain");
+          if (btn.getAttribute("data-hapus")) {
+            await fetch(`${base()}/link_diblokir/${encodeURIComponent(domain)}.json`, { method: "DELETE" });
+          } else {
+            const sekarang = (obj[domain] && obj[domain].aktif !== false);
+            await api(`link_diblokir/${domain}`, "PATCH", { aktif: !sekarang });
+          }
+          await muatSemua();
+        });
+      });
+    }
+
+    function renderPerangkat(obj) {
+      const entries = Object.entries(obj || {});
+      if (!entries.length) {
+        $("tabelPerangkat").innerHTML = "<p class='muted'>Belum ada perangkat.</p>";
+        return;
+      }
+      $("tabelPerangkat").innerHTML = `<table>
+        <thead><tr><th>ID</th><th>Nama</th><th>Platform</th><th>Terakhir online</th></tr></thead>
+        <tbody>${entries.map(([id, i]) => `<tr>
+          <td class="url">${esc(id)}</td>
+          <td>${esc(i.nama || "-")}</td>
+          <td>${esc(i.platform || "-")}</td>
+          <td>${esc(i.terakhir_online || "-")}</td>
+        </tr>`).join("")}</tbody></table>`;
+    }
+
+    async function muatSemua() {
+      try {
+        const [statusBlokir, windows, android, izin, link, perangkat] = await Promise.all([
+          api("status_blokir"),
+          api("aktivitas_online/windows"),
+          api("aktivitas_online/android"),
+          api("izin_instal"),
+          api("link_diblokir"),
+          api("perangkat"),
+        ]);
+
+        $("statBlokir").textContent = statusBlokir === true ? "AKTIF" : "Nonaktif";
+        $("statBlokir").style.color = statusBlokir === true ? "var(--waspada)" : "var(--merk)";
+
+        if (windows) {
+          $("updateWindows").textContent = "Update: " + (windows.terakhir_update || "-");
+          renderWeb(windows.website_terakhir || []);
+          renderUnduh(windows.unduhan_terakhir || []);
+        } else {
+          $("updateWindows").textContent = "Belum ada data Windows";
+          renderWeb([]);
+          renderUnduh([]);
+        }
+
+        if (android) {
+          $("dataAndroid").innerHTML = `<pre style="white-space:pre-wrap;font-size:0.85rem;">${esc(JSON.stringify(android, null, 2))}</pre>`;
+        } else {
+          $("dataAndroid").textContent = "Belum ada perangkat Android online.";
+        }
+
+        renderIzin(izin);
+        renderLink(link);
+        renderPerangkat(perangkat);
+      } catch (err) {
+        alert("Gagal memuat data. Pastikan firebase_lokal.py berjalan.\n" + err.message);
+      }
+    }
+
+    $("btnRefresh").addEventListener("click", muatSemua);
+    $("btnToggleBlokir").addEventListener("click", async () => {
+      const sekarang = await api("status_blokir");
+      await api("status_blokir", "PUT", !(sekarang === true));
+      await muatSemua();
+    });
+    $("btnTambahLink").addEventListener("click", async () => {
+      const domain = $("domainBaru").value.trim().toLowerCase().replace(/^www\./, "");
+      if (!domain) return alert("Isi domain dulu");
+      const alasan = $("alasanBaru").value.trim() || "Diblokir pengasuh";
+      await api(`link_diblokir/${domain}`, "PUT", { alasan, aktif: true });
+      $("domainBaru").value = "";
+      $("alasanBaru").value = "";
+      await muatSemua();
+    });
+
+    // Ambil URL dari config.json di folder proyek (XAMPP)
+    async function muatConfigLaluMulai() {
+      try {
+        const res = await fetch("../config.json", { cache: "no-store" });
+        if (res.ok) {
+          const cfg = await res.json();
+          if (cfg.firebase_url) {
+            $("firebaseUrl").value = String(cfg.firebase_url).replace(/\/$/, "");
+            $("configHint").textContent = "URL dimuat dari config.json";
+          }
+        } else {
+          $("configHint").textContent = "config.json tidak terbaca — isi URL manual";
+        }
+      } catch (e) {
+        $("configHint").textContent = "Gagal baca config.json — isi URL manual / izinkan CORS lokal";
+      }
+      await muatSemua();
+      setInterval(muatSemua, 8000);
+    }
+
+    muatConfigLaluMulai();
+  </script>
+</body>
+</html>

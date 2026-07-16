@@ -1,0 +1,76 @@
+============================================================
+NME Guardian — Cara Gabung ke Firebase Cloud
+Pesantren API Nailul Muna
+============================================================
+
+A. BUAT DATABASE DI FIREBASE CONSOLE
+------------------------------------
+1. Buka https://console.firebase.google.com/
+2. Add project (contoh nama: nme-guardian)
+3. Build → Realtime Database → Create Database
+   - Pilih region (contoh: asia-southeast1)
+4. Salin Database URL, contoh:
+   https://nme-guardian-default-rtdb.asia-southeast1.firebasedatabase.app
+   (TANPA garis miring di akhir, TANPA .json)
+
+B. RULES (UJI AWAL SAJA)
+------------------------
+Di tab Rules, Publish:
+
+{
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}
+
+Peringatan: rules terbuka hanya untuk belajar/uji.
+Kunci dengan Authentication sebelum dipakai produksi.
+
+Isi yang sama ada di file: database.rules.json
+
+C. NODE AWAL DI TAB DATA
+------------------------
+Buat node berikut (klik +):
+
+  status_blokir     = false          (tipe boolean)
+  link_diblokir     = {}             (object)
+  izin_instal       = {}             (object)
+  aktivitas_online  = {}             (object)
+  perangkat         = {}             (object)
+  aplikasi_dibuka   = null           (boleh kosong; diisi otomatis)
+
+Contoh link_diblokir (opsional):
+  tiktok.com → { "alasan": "Hiburan berlebih", "aktif": true }
+  Instagram.com → { "alasan": "Media sosial", "aktif": true }
+
+D. ISI CONFIG DI PROYEK INI
+---------------------------
+1. Salin config.contoh.json menjadi config.json
+   (atau edit config.json yang sudah ada)
+2. Isi:
+   {
+     "firebase_url": "https://URL-DATABASE-ANDA.firebasedatabase.app"
+   }
+3. Samakan juga:
+   - android/app/src/main/assets/config.json
+4. Setelah pakai URL cloud (https), TIDAK perlu menjalankan
+   firebase_lokal.py lagi.
+
+E. UJI
+------
+1. python uji_firebase.py
+   → harus tampil OK untuk GET/PUT
+2. python pantau.py → Mulai Pantau
+3. Cek Console Firebase: node aktivitas_online/windows terisi
+4. Panel admin:
+   http://localhost/Nailul%20Muna%20Cyber%20Guard/admin/
+   (URL ikut config.json)
+
+F. GITHUB
+---------
+Repo lokal sudah disiapkan dengan .gitignore (config.json
+tidak ikut ter-commit). Push ke GitHub HANYA jika Anda minta
+secara eksplisit dan memberi URL repo (disarankan Private).
+
+============================================================
