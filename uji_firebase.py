@@ -29,7 +29,7 @@ def utama():
     # GET status_blokir
     try:
         r = requests.get(f"{url}/status_blokir.json", timeout=TIMEOUT)
-        print(f"[GET] status_blokir → HTTP {r.status_code} | isi={r.json()}")
+        print(f"[GET] status_blokir -> HTTP {r.status_code} | isi={r.json()}")
         if r.status_code != 200:
             raise RuntimeError(f"GET gagal: {r.status_code}")
     except requests.exceptions.RequestException as e:
@@ -48,7 +48,7 @@ def utama():
     }
     try:
         r = requests.put(f"{url}/uji_koneksi.json", json=payload, timeout=TIMEOUT)
-        print(f"[PUT] uji_koneksi → HTTP {r.status_code}")
+        print(f"[PUT] uji_koneksi -> HTTP {r.status_code}")
         if r.status_code != 200:
             raise RuntimeError(f"PUT gagal: {r.status_code} {r.text[:200]}")
     except requests.exceptions.RequestException as e:
